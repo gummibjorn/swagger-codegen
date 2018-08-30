@@ -384,17 +384,16 @@ public class TypeScriptAngularClientCodegen extends AbstractTypeScriptClientCode
         // for example if modelNamePrefix is 'Swg' and the model name 'Pet',
         // name is already SwgPet. toModelFilename(name) is SwgSwgPet instead
         // of SwgPet.
-        String filename = toModelFilename(name);
 
         if (!StringUtils.isEmpty(modelNamePrefix)) {
-            filename = StringUtils.removeStart(filename, modelNamePrefix);
+            name = StringUtils.removeStart(name, modelNamePrefix);
         }
 
         if (!StringUtils.isEmpty(modelNameSuffix)) {
-            filename = StringUtils.removeEnd(filename, modelNameSuffix);
+            name = StringUtils.removeEnd(name, modelNameSuffix);
         }
-
-        return modelPackage() + "/" + filename;
+        
+        return modelPackage() + "/" + toModelFilename(name);
     }
 
     public String getNpmName() {
