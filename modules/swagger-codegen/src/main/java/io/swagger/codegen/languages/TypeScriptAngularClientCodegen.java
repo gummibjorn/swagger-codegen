@@ -374,11 +374,6 @@ public class TypeScriptAngularClientCodegen extends AbstractTypeScriptClientCode
 
     @Override
     public String toModelFilename(String name) {
-        return camelize(toModelName(name), true);
-    }
-
-    @Override
-    public String toModelImport(String name) {
         // with modelNamePrefix/modelNameSuffix, name already includes
         // the prefix/suffix.
         // for example if modelNamePrefix is 'Swg' and the model name 'Pet',
@@ -386,13 +381,18 @@ public class TypeScriptAngularClientCodegen extends AbstractTypeScriptClientCode
         // of SwgPet.
 
         if (!StringUtils.isEmpty(modelNamePrefix)) {
-            name = StringUtils.removeStart(name, modelNamePrefix);
+            name = StringUtils.removeStart(name, StringUtils.capitalize(modelNamePrefix));
         }
 
         if (!StringUtils.isEmpty(modelNameSuffix)) {
-            name = StringUtils.removeEnd(name, modelNameSuffix);
+            name = StringUtils.removeEnd(name, StringUtils.capitalize(modelNameSuffix));
         }
-        
+
+        return camelize(toModelName(name), true);
+    }
+
+    @Override
+    public String toModelImport(String name) {
         return modelPackage() + "/" + toModelFilename(name);
     }
 
